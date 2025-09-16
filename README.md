@@ -20,4 +20,4 @@ Sistema completo para gestão de alunos, notas e turmas, ideal para escolas téc
 ## ▶️ Como rodar localmente
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/SILVA2005/sysacademico.git
+   git clone https://github.com/SILVA2005/soaresacademico.git
