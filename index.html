@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Renato | Desenvolvedor Full Stack</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* RESET + FONTES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(360deg, #0f0c29, #302b63, #24243e);
+      background-size: 400% 400%;
+      color: #ffffff;
+      animation: gradientBG 15s ease infinite;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* CURSOR PERSONALIZADO */
+    body { cursor: none; }
+    .cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: #00d4ff;
+      border-radius: 50%;
+      mix-blend-mode: difference;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: width 0.2s, height 0.2s, background 0.3s;
+      box-shadow: 0 0 10px 3px rgba(0, 212, 255, 0.5);
+    }
+    .cursor.hover {
+      width: 50px;
+      height: 50px;
+      background: transparent;
+      border: 2px solid #00d4ff;
+      box-shadow: 0 0 20px 5px rgba(0, 212, 255, 0.3);
+    }
+
+    /* SCROLL PROGRESS BAR */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: #00d4ff;
+      box-shadow: 0 0 10px #00d4ff;
+      z-index: 10000;
+      transition: width 0.05s ease;
+    }
+
+    /* NAVBAR FIXA */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      background: rgba(15, 12, 41, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 10px 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-container a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    .nav-container a:hover {
+      color: #00d4ff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+      font-weight: 600;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 5px;
+      background: linear-gradient(to right, #ff2975, #00d4ff);
+      border-radius: 5px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .highlight {
+      color: #00d4ff;
+      text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+    }
+
+    /* BOTÕES */
+    .btn, .btn-outline {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 34px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.4s ease;
+      margin: 0 12px;
+    }
+
+    .btn {
+      background: #ff2975;
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 41, 117, 0.6);
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(255, 41, 117, 0.8);
+    }
+
+    .btn-outline {
+      border: 2px solid #00d4ff;
+      color: #00d4ff;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .typing-text {
+      font-size: 1.6rem;
+      color: #0bff66;
+      margin: 20px 0;
+      min-height: 45px;
+      font-weight: 500;
+    }
+
+    .code-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.2) 0%, transparent 50%);
+      animation: floatCode 30s linear infinite;
+    }
+
+    @keyframes floatCode {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+
+    /* PROJETOS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 35px;
+      margin-top: 60px;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 25px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        transparent,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+      transform: rotate(30deg);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+      border-color: #00d4ff;
+    }
+
+    .project-card h3 {
+      color: #00d4ff;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+    }
+
+    .tech-badges {
+      margin: 15px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      background: rgba(255, 41, 117, 0.2);
+      color: #ff2975;
+      border-radius: 20px;
+      border: 1px solid #ff2975;
+      font-weight: 500;
+    }
+
+    .project-links a {
+      margin-right: 18px;
+      color: #00d4ff;
+      font-size: 1.3rem;
+      transition: color 0.3s;
+    }
+
+    .project-links a:hover {
+      color: #0bff66;
+    }
+
+    /* CONTATO */
+    .contact-form {
+      max-width: 650px;
+      margin: 60px auto 0;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    button {
+      background: #ff2975;
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #e01a66;
+      box-shadow: 0 0 20px rgba(255, 41, 117, 0.6);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 80px 0 50px;
+      font-size: 1.2rem;
+      color: #aaa;
+      position: relative;
+    }
+
+    .terminal {
+      margin-top: 25px;
+      font-family: monospace;
+      color: #0bff66;
+      font-size: 1rem;
+    }
+
+    .social-icons {
+      margin-top: 35px;
+      font-size: 2rem;
+    }
+
+    .social-icons a {
+      color: white;
+      margin: 0 20px;
+      transition: all 0.4s;
+    }
+
+    .social-icons a:hover {
+      color: #00d4ff;
+      transform: translateY(-3px);
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      h2 {
+        font-size: 2.2rem;
+      }
+      .btn, .btn-outline {
+        display: block;
+        margin: 15px auto;
+        width: 85%;
+      }
+      nav {
+        padding: 15px;
+      }
+      .nav-container {
+        padding: 8px 15px;
+      }
+      .nav-container a {
+        margin: 0 10px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Progresso de Scroll -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Cursor Personalizado -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Navbar Fixa -->
+  <nav>
+    <div class="nav-container">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="inicio" data-aos="fade-up">
+    <div class="container">
+      <h1>Olá, eu sou <span class="highlight">Renato</span></h1>
+      <p class="typing-text"></p>
+      <a href="#projetos" class="btn">Ver Projetos</a>
+      <a href="#contato" class="btn-outline">Fale Comigo</a>
+    </div>
+    <div class="code-animation"></div>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre" data-aos="fade-up">
+    <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px; justify-content: center;">
+      
+      <!-- Foto -->
+      <div style="flex: 1; min-width: 300px; text-align: center;">
+        <img 
+          src="https://i.postimg.cc/FfggP60s/IMG-20250405-WA0007.jpg" 
+          alt="Foto de Renato Soares" 
+          style="
+            width: 280px; 
+            height: 280px; 
+            border-radius: 50%; 
+            border: 4px solid #00d4ff; 
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); 
+            object-fit: cover;
+            transition: transform 0.3s;
+          "
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'"
+        >
+      </div>
+
+      <!-- Texto -->
+      <div style="flex: 2; min-width: 300px; text-align: center;">
+        <h2>Sobre Mim</h2>
+        <p>
+          Sou <strong>Técnico em Análise e Desenvolvimento de Sistemas</strong>, apaixonado por criar soluções tecnológicas inteligentes e interfaces fluidas.
+        </p>
+        <p>
+          Trabalho com <strong>JavaScript, React, Node.js, Python</strong> e muito ❤️ em cada linha de código. Transformo ideias em aplicações reais com foco em performance, usabilidade e design moderno.
+        </p>
+        <p>
+          Em constante evolução, busco sempre aprender novas tecnologias para entregar projetos inovadores e escaláveis.
+        </p>
+        <div class="tech-badges" style="margin-top: 25px; justify-content: center; display: flex; flex-wrap: wrap; gap: 10px;">
+          <span class="badge"><i class="fab fa-js"></i> JavaScript</span>
+          <span class="badge"><i class="fab fa-react"></i> React</span>
+          <span class="badge"><i class="fab fa-node"></i> Node.js</span>
+          <span class="badge"><i class="fab fa-python"></i> Python</span>
+          <span class="badge"><i class="fas fa-database"></i> MongoDB</span>
+          <span class="badge"><i class="fab fa-git-alt"></i> Git</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projetos -->
+  <section id="projetos" data-aos="fade-up">
+    <div class="container">
+      <h2>Meus Projetos</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>App Financeiro</h3>
+          <p>Dashboard de controle financeiro com gráficos em tempo real e autenticação segura.</p>
+          <div class="tech-badges">
+            <span class="badge">React</span>
+            <span class="badge">Chart.js</span>
+            <span class="badge">Firebase</span>
+          </div>
+          <div class="project-links">
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="Demo"><i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>API de Tarefas</h3>
+          <p>REST API com autenticação JWT, CRUD completo e deploy na nuvem.</p>
+          <div class="tech-badges">
+            <span class="badge">Node.js</span>
+            <span class="badge">Express</span>
+            <span class="badge">MongoDB</span>
+          </div>
+          <div class="project-links">
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="Demo"><i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Jogo da Memória</h3>
+          <p>Jogo educativo com animações fluidas, som e sistema de pontuação inteligente.</p>
+          <div class="tech-badges">
+            <span class="badge">HTML/CSS</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge">GSAP</span>
+          </div>
+          <div class="project-links">
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="Demo"><i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" data-aos="fade-up">
+    <div class="container">
+      <h2>Vamos Conversar?</h2>
+      <p>Tem um projeto em mente? Preencha o formulário abaixo!</p>
+
+      <!-- Carregue o SDK do EmailJS -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+      <form class="contact-form" id="contact-form">
+        <input type="text" name="nome" placeholder="Seu nome" required />
+        <input type="email" name="email" placeholder="Seu email" required />
+        <textarea name="mensagem" rows="5" placeholder="Sua mensagem" required></textarea>
+        <button type="submit">Enviar Mensagem</button>
+        <div id="form-status"></div>
+      </form>
+
+      <div class="social-icons">
+        <a href="https://github.com/SILVA2005" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/renato-silva-soares" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://instagram.com/Soaresszr_" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:soaresszrsilva@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Feito com ❤️ por Renato Soares | 2025</p>
+    <div class="terminal">
+      > npm run dream<br>
+      > echo "Código é arte"
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Inicializa AOS (animações)
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    // Digitação automática
+    const text = "Desenvolvedor Full Stack | Criador de Experiências Digitais";
+    let index = 0;
+    const typingEl = document.querySelector('.typing-text');
+
+    function type() {
+      typingEl.textContent = text.slice(0, index);
+      index++;
+      if (index > text.length) index = 0;
+      setTimeout(type, 150);
+    }
+    type();
+
+    // Cursor personalizado
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mouseenter', () => {
+      cursor.style.display = 'block';
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.style.display = 'none';
+    });
+
+    // Efeito hover no cursor
+    document.querySelectorAll('a, button, .project-card').forEach(elem => {
+      elem.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+      });
+      elem.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+      });
+    });
+
+    // Barra de progresso
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.offsetHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    });
+
+    // Easter Egg: R-E-N-A-T-O
+    const secret = ['r', 'e', 'n', 'a', 't', 'o'];
+    let current = [];
+    window.addEventListener('keydown', (e) => {
+      current.push(e.key.toLowerCase());
+      current = current.slice(-6);
+      if (current.join('') === secret.join('')) {
+        alert("🎉 Parabéns! Você achou meu segredo! Quer trabalhar junto?");
+      }
+    });
+
+    // ===================== EMAILJS INTEGRADO =====================
+    (function() {
+      emailjs.init("C8ijgy-klWV7LiJ8B"); // Sua chave pública
+    })();
+
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const status = document.getElementById("form-status");
+      status.style.marginTop = "20px";
+      status.style.fontFamily = "Outfit, sans-serif";
+      status.style.textAlign = "center";
+
+      status.innerHTML = '<span style="color:#0bff66">⏳ Enviando mensagem...</span>';
+
+      emailjs.sendForm("default_service", "template_5iiqi7m", this)
+        .then(() => {
+          status.innerHTML = '<span style="color:#0bff66">✅ Mensagem enviada com sucesso! Obrigado pelo contato.</span>';
+          document.getElementById("contact-form").reset();
+          setTimeout(() => { status.style.display = "none"; }, 6000);
+        })
+        .catch((error) => {
+          console.error("Erro EmailJS:", error);
+          status.innerHTML = `<span style="color:#ff2975">❌ Falha ao enviar: ${error.text || "Erro desconhecido"}</span>`;
+        });
+    });
+  </script>
+
+</body>
+</html>
